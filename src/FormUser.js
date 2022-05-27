@@ -4,13 +4,27 @@ const FormUser = props => {
 
     const [usuario, setUsuario] = useState('');
     const [edad, setEdad] = useState('');
+    const [error, setError] = useState(false);
+    const [mensaje, setMensaje] = useState('');
      
 
     const addUserHandler = event => {
+        
         event.preventDefault();
+        setError(false);
+        if (edad.length===0 || usuario.length===0){
+            setMensaje("Ingrese ambos valores");
+            if (edad < 0){
+                setMensaje("Ingrese edad positiva");
+            }
+            setError(true);
+        }         
+        
         const us = {
+            error: error,
+            mensaje: mensaje,
             usuario: usuario,
-            edad: edad
+            edad: edad,
         };
         console.log(us);
         props.onAgregarUsuario(us);
